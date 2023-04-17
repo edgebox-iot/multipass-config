@@ -14,7 +14,7 @@ _Note: Since Multipass is also multi-platform, it should also run in Windows, al
 
 ## Installation
 
-1. Clone this repository to your Linux host.
+1. Clone this repository to your machine.
 2. Run `make install`
 3. Access `http://edgebox.local` in your browser.
 
