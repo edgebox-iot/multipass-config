@@ -20,17 +20,23 @@ fi
 # Set DEBIAN_FRONTEND to noninteractive to prevent apt from asking for user input
 export DEBIAN_FRONTEND=noninteractive
 
-# Allow SSH access without public key
-sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-systemctl restart ssh
-
-# Update apt
-apt update
-
 # Create user system and add to sudoers, set password to EDGEBOX_SYSTEM_PW
 useradd -m -s /bin/bash system
 echo "system:$(printenv EDGEBOX_SYSTEM_PW)" | chpasswd
 usermod -aG sudo system
+
+# Set root password as EDGEBOX_SYSTEM_PW
+echo "root:$(printenv EDGEBOX_SYSTEM_PW)" | chpasswd
+
+# Allow SSH access without public key
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+
+# Allow root ssh login
+sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+systemctl restart ssh
+
+# Update apt
+apt update
 
 # Create docker group
 groupadd docker
