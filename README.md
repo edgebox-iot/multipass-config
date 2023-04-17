@@ -8,7 +8,7 @@ This repository contains a set of scripts and configuration files to automate th
 
 ## Prerequisites
 
-* A Linux or MacOS host with Multipass installed (see [Multipass](https://multipass.run/))
+* A host machine with Multipass installed and the hability to run bash scripts and Makefiles (see [Multipass](https://multipass.run/))
 
 _Note: Since Multipass is also multi-platform, it should also run in Windows, albeit you will need to manually run the commands in the `Makefile`._
 
