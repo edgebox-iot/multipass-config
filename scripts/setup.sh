@@ -1,6 +1,6 @@
-# If EDGEBOX_SYSTEM_PW is not set, set it to "pw"
+# If EDGEBOX_SYSTEM_PW is not set, set it to the first argument
 if [ -z "$EDGEBOX_SYSTEM_PW" ]; then
-    export EDGEBOX_SYSTEM_PW="pw"
+    EDGEBOX_SYSTEM_PW=$1
 fi
 
 # Set DEBIAN_FRONTEND to noninteractive to prevent apt from asking for user input

@@ -30,16 +30,13 @@ install:
 	multipass exec $(hostname) -- sudo bash /home/ubuntu/setup.sh $(system-pw)
 	/usr/bin/ssh system@$(hostname).local
 
+uninstall:
+	multipass delete $(hostname)
+	multipass purge
+	ssh-keygen -R $(hostname).local
+
 start:
 	multipass start $(hostname)
 
 stop:
 	multipass stop $(hostname)
-
-reset-ssh:
-	ssh-keygen -R $(hostname).local
-
-delete:
-	multipass delete $(hostname)
-	multipass purge
-	ssh-keygen -R $(hostname).local
