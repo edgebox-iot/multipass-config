@@ -3,6 +3,20 @@ if [ -z "$EDGEBOX_SYSTEM_PW" ]; then
     export EDGEBOX_SYSTEM_PW=$1
 fi
 
+# Get current system architecture (and normalize to POSIX standard)
+ARCH=$(uname -m)
+if [ "$ARCH" = "aarch64" ]; then
+    export ARCH="arm64"
+fi
+
+if [  "$ARCH" = "armv7l" ]; then
+    export ARCH="arm"
+fi
+
+if [  "$ARCH" = "x86_64" ]; then
+    export ARCH="amd64"
+fi
+
 # Set DEBIAN_FRONTEND to noninteractive to prevent apt from asking for user input
 export DEBIAN_FRONTEND=noninteractive
 
@@ -30,6 +44,10 @@ apt install -y docker.io python3-pip golang avahi-daemon avahi-utils
 pip3 -v install docker-compose
 pip3 -v install yq
 
+# Install cloudflared
+wget -q https://github.com/cloudflare/cloudflared/releases/download/2023.3.1/cloudflared-linux-$(printenv ARCH).deb
+sudo dpkg -i cloudflared-linux-$(printenv ARCH).deb
+
 # Fetch, build, and start edgebox components
 
 mkdir /home/system/components
@@ -44,7 +62,7 @@ mkdir appdata
 chmod -R 777 appdata
 ./ws -b
 cd /home/system/components/edgeboxctl
-make build-prod
+make build-$(printenv ARCH)
 cp ./edgeboxctl.service /lib/systemd/system/edgeboxctl.service
 cp ./bin/edgeboxctl /usr/local/sbin/edgeboxctl
 systemctl daemon-reload
