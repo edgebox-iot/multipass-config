@@ -4,17 +4,17 @@ Edgebox Unattended Install Process for Canonical Multipass.
 
 ## Overview
 
-This repository contains a set of scripts and configuration files to automate the installation of Edgebox on a Multipass VM. The scripts are designed to be run on a Linux host, and will create a Multipass VM, install Edgebox, and configure it to run on boot.
+This repository contains a set of scripts and configuration files to automate the installation of Edgebox on a Multipass VM. The scripts are designed to be run on a host that supports Makefiles and bash scripts, and will create a Multipass VM, install the Edgebox inside it, and configure it to run on boot.
 
 ## Prerequisites
 
-* A Linux or MacOS host with Multipass installed (see [Multipass](https://multipass.run/))
+* A host machine with Multipass installed and the hability to run bash scripts and Makefiles (see [Multipass](https://multipass.run/))
 
 _Note: Since Multipass is also multi-platform, it should also run in Windows, albeit you will need to manually run the commands in the `Makefile`._
 
 ## Installation
 
-1. Clone this repository to your Linux host.
+1. Clone this repository to your machine.
 2. Run `make install`
 3. Access `http://edgebox.local` in your browser.
 
