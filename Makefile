@@ -28,7 +28,7 @@ install:
 	multipass launch 22.04 -n $(hostname) -c $(cpus) -m $(memory) -d $(storage) -$(log)
 	multipass transfer ./scripts/setup.sh $(hostname):/home/ubuntu/setup.sh
 	multipass exec $(hostname) -- sudo bash /home/ubuntu/setup.sh $(system-pw)
-	/usr/bin/ssh system@$(hostname).local
+	/usr/bin/ssh -oStrictHostKeyChecking=no system@$(hostname).local
 
 uninstall:
 	multipass delete $(hostname)
