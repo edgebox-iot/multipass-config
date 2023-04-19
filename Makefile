@@ -43,5 +43,7 @@ start:
 stop:
 	multipass stop $(hostname)
 
+restart: stop start
+
 shell:
 	./scripts/expect.sh $(system-pw) /usr/bin/ssh -oStrictHostKeyChecking=no root@$(hostname).local
