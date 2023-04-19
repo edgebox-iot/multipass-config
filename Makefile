@@ -1,5 +1,8 @@
 # A makefile to manage edgebox via multipass
 
+GREEN=\033[0;32m
+NC=\033[0m
+
 ifndef log
 override log = v
 endif
@@ -28,7 +31,8 @@ install:
 	multipass launch 22.04 -n $(hostname) -c $(cpus) -m $(memory) -d $(storage) -$(log)
 	multipass transfer ./scripts/setup.sh $(hostname):/home/ubuntu/setup.sh
 	multipass exec $(hostname) -- sudo bash /home/ubuntu/setup.sh $(system-pw)
-	./scripts/expect.sh $(system-pw) /usr/bin/ssh -oStrictHostKeyChecking=no root@$(hostname).local
+	@echo "$(GREEN)System Successfully Installed!$(NC)Access it via 'http://$(hostname).local' (web) or by running 'make shell' (ssh)"
+
 
 uninstall:
 	multipass delete $(hostname)
@@ -38,7 +42,7 @@ uninstall:
 start:
 	multipass start $(hostname)
 	./scripts/expect.sh $(system-pw) /usr/bin/ssh -T -oStrictHostKeyChecking=no root@$(hostname).local "cd /home/system/components/ws; ./ws -b"
-	./scripts/expect.sh $(system-pw) /usr/bin/ssh -oStrictHostKeyChecking=no root@$(hostname).local
+	@echo "$(GREEN)System Started!$(NC)Access it via 'http://$(hostname).local' (web) or by running 'make shell' (ssh)"
 
 stop:
 	multipass stop $(hostname)

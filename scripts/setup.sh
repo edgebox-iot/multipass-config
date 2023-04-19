@@ -59,6 +59,11 @@ sudo dpkg -i cloudflared-linux-$(printenv ARCH).deb
 mkdir /home/system/components
 cd /home/system/components
 git clone https://github.com/edgebox-iot/edgeboxctl.git
+cd edgeboxctl
+make build-$(printenv ARCH)
+cp ./edgeboxctl.service /lib/systemd/system/edgeboxctl.service
+cp ./bin/edgeboxctl /usr/local/sbin/edgeboxctl
+cd ..
 git clone https://github.com/edgebox-iot/ws.git
 git clone https://github.com/edgebox-iot/api.git
 git clone https://github.com/edgebox-iot/apps.git
@@ -66,11 +71,7 @@ cd ws
 chmod 757 ws
 mkdir appdata
 chmod -R 777 appdata
-./ws -b
-cd /home/system/components/edgeboxctl
-make build-$(printenv ARCH)
-cp ./edgeboxctl.service /lib/systemd/system/edgeboxctl.service
-cp ./bin/edgeboxctl /usr/local/sbin/edgeboxctl
 systemctl daemon-reload
 systemctl enable edgeboxctl
 systemctl start edgeboxctl
+./ws -b
