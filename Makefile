@@ -4,7 +4,7 @@ ifndef log
 override log = v
 endif
 
-ifndef hostanme
+ifndef hostname
 override hostname = edgebox
 endif
 
