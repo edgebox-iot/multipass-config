@@ -46,7 +46,7 @@ usermod -aG docker system
 
 # Install dependencies
 
-apt install -y docker.io python3-pip golang avahi-daemon avahi-utils restic
+apt install -y docker.io python3-pip golang avahi-daemon avahi-utils restic jq
 pip3 -v install docker-compose
 pip3 -v install yq
 
