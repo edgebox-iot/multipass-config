@@ -67,6 +67,10 @@ cd ..
 git clone https://github.com/edgebox-iot/ws.git
 git clone https://github.com/edgebox-iot/api.git
 git clone https://github.com/edgebox-iot/apps.git
+git clone https://github.com/edgebox-iot/logger.git
+cd logger
+make install
+cd ..
 cd ws
 chmod 757 ws
 mkdir appdata
@@ -74,4 +78,6 @@ chmod -R 777 appdata
 systemctl daemon-reload
 systemctl enable edgeboxctl
 systemctl start edgeboxctl
+systemctl enable logger
+systemctl start logger
 ./ws -b
