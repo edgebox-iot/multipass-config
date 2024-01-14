@@ -55,7 +55,7 @@ The `make install` command accepts the following arguments:
 The following command will create a Multipass VM named `edgebox` with 4 CPUs, 8GB of memory, and 100GB of disk space. It will also set the `system` user password to `password` and configure the necessary components to run the Edgebox system:
 
 ```bash
-make install hostname=edgebox cpus=4 memory=8G disk=100G system-pw=password
+make install hostname=edgebox cpus=4 memory=8G storage=100G system-pw=password
 ```
 
 ## Access
