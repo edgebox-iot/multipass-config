@@ -39,7 +39,7 @@ install:
 	@multipass transfer /tmp/install_edgebox.sh $(hostname):/home/ubuntu/install_edgebox.sh
 	@multipass exec $(hostname) -- sudo bash /home/ubuntu/install_edgebox.sh --system-password $(system-pw) --skip-prompt
 	@rm ./tmp/install_edgebox.sh || true
-	@echo "System Successfully Installed. Access it via 'http://$(hostname).local' (web) or by running 'make shell' (ssh)"
+	@echo "System Successfully Installed. Access it via 'http://$(hostname).local' (web) or by running 'make shell $(hostname)' (ssh)"
 
 install-cloud:
 	@echo "-> ✅ Checking cluster availability..."
@@ -55,7 +55,7 @@ install-cloud:
 	rm ./scripts/cloud.env || true
 	@echo "-> 🛠️ Rebuilding proxy configuration...
 	python3 ./scripts/rebuild_proxies.py
-	@echo "System Successfully Installed. Access it via 'http://$(hostname).$(cluster)' (web) or by running 'make shell' (ssh)"
+	@echo "System Successfully Installed. Access it via 'http://$(hostname).$(cluster)' (web) or by running 'make shell $(hostname)' (ssh)"
 
 uninstall:
 	@echo "🚨 You're about to uninstall Edgebox VM '$(hostname)'. This will delete all data."
