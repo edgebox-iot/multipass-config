@@ -51,9 +51,9 @@ install-cloud:
 	@multipass transfer ./scripts/install_edgebox.sh $(hostname):/home/ubuntu/install_edgebox.sh
 	@echo "-> ☁️ Setting up cloud environment..."
 	./scripts/setup_cloud_env.sh $(hostname) $(cluster) $(cluster_ip) $(cluster_ssh_port)
-	@multipass exec $(hostname) -- sudo bash /home/ubuntu/install_edgebox.sh --system-password $(system-pw) --edgebox-cluster-host $(hostname).$(cluster) --skip-prompt
+	@multipass exec $(hostname) -- sudo bash /home/ubuntu/install_edgebox.sh --system-password $(system-pw) --cluster-host $(hostname).$(cluster) --skip-prompt
 	rm ./scripts/cloud.env || true
-	@echo "-> 🛠️ Rebuilding proxy configuration...
+	@echo "-> 🛠️ Rebuilding proxy configuration..."
 	python3 ./scripts/rebuild_proxies.py
 	@echo "System Successfully Installed. Access it via 'http://$(hostname).$(cluster)' (web) or by running 'make shell $(hostname)' (ssh)"
 
