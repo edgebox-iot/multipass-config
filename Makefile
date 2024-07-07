@@ -45,10 +45,10 @@ install-cloud:
 	@echo "-> ✅ Checking cluster availability..."
 	./scripts/cluster_availability_check.sh $(hostname) $(cluster) $(cluster_ip) $(cluster_ssh_port)
 	@echo "-> 👇 Downloading installation script..."
-	@curl -L install.edgebox.io -o /tmp/install_edgebox.sh
+	@curl -L install.edgebox.io -o ./scripts/install_edgebox.sh
 	@echo "-> 🆕 Launching new virtual machine..."
 	@multipass launch 22.04 -n $(hostname) -c $(cpus) -m $(memory) -d $(storage) -$(log)
-	@multipass transfer /tmp/install_edgebox.sh $(hostname):/home/ubuntu/install_edgebox.sh
+	@multipass transfer ./scripts/install_edgebox.sh $(hostname):/home/ubuntu/install_edgebox.sh
 	@echo "-> ☁️ Setting up cloud environment..."
 	./scripts/setup_cloud_env.sh $(hostname) $(cluster) $(cluster_ip) $(cluster_ssh_port)
 	@multipass exec $(hostname) -- sudo bash /home/ubuntu/install_edgebox.sh --system-password $(system-pw) --edgebox-cluster-host $(hostname).$(cluster) --skip-prompt
