@@ -33,10 +33,12 @@ install:
 	@echo "This installation will take a few minutes. Please be patient 🙏"
 	@echo
 	@echo "-> 👇 Downloading installation script..."
-	@curl -L install.edgebox.io -o /tmp/install_edgebox.sh
+	mkdir -p ./tmp
+	@rm -f ./tmp/install_edgebox.sh || true
+	@curl -L install.edgebox.io -o ./tmp/install_edgebox.sh
 	@echo "-> 🆕 Launching new virtual machine..."
 	@multipass launch 22.04 -n $(hostname) -c $(cpus) -m $(memory) -d $(storage) -$(log)
-	@multipass transfer /tmp/install_edgebox.sh $(hostname):/home/ubuntu/install_edgebox.sh
+	@multipass transfer ./tmp/install_edgebox.sh $(hostname):/home/ubuntu/install_edgebox.sh
 	@multipass exec $(hostname) -- sudo bash /home/ubuntu/install_edgebox.sh --system-password $(system-pw) --skip-prompt
 	@rm ./tmp/install_edgebox.sh || true
 	@echo "System Successfully Installed. Access it via 'http://$(hostname).local' (web) or by running 'make shell $(hostname)' (ssh)"
@@ -66,7 +68,8 @@ uninstall:
 	@multipass delete $(hostname)
 	@multipass purge
 	@echo "-> 🗑️ Deleting VM from known_hosts '$(hostname)'..."
-	ssh-keygen -R $(hostname).local
+	ssh-keygen -R $(hostname).local || echo "-> 🗑️ No known_hosts entry for '$(hostname).local' found. Skipping..."
+	@echo "Edgebox VM '$(hostname)' successfully uninstalled."
 
 start:
 	@multipass start $(hostname)

@@ -1,2 +1,3 @@
 scripts/cloud.env
-scripts/install_edgebox.sh
+tmp/install_edgebox.sh
+tmp/
